@@ -1,0 +1,36 @@
+@mixin grid() {
+  .grid {
+    img {
+      width: initial;
+    }
+    text-align: center;
+    margin: 0 auto;
+    padding: 0;
+
+    &--small {
+      width: auto;
+      max-width: $grid-size-small;
+    }
+    &--medium {
+      width: auto;
+      max-width: $grid-size-medium;
+    }
+    &--large {
+      width: auto;
+      max-width: $grid-size-large;
+    }
+
+    @include media(small) {
+      &[class*='grid--size-'] {
+        @include display-flex();
+        @include flex-flow();
+        @include justify-content(center);
+      }
+      @for $i from 1 through $grid-total-columns {
+        &--size-#{$i} > .grid__column {
+          width: percentage(1 / $i);
+        }
+      }
+    }
+  }
+}

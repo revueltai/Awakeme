@@ -1,0 +1,72 @@
+@mixin buttons() {
+  .btn,
+  .btn-ghost {
+    cursor: pointer;
+    color: $color-button;
+    @include transition(border-color $transitions, background-color $transitions, color $transitions);
+    &:hover {
+      color: $color-button-hover;
+    }
+  }
+
+  %button-base {
+    text-shadow: none;
+    display: inline-block;
+    border-radius: $btn-border-radius;
+    font-weight: 300;
+    text-decoration: none;
+    text-align: center;
+    padding: $spacer10 $spacer15;
+    font-size: $font-size24;
+  }
+
+  %button-small {
+    padding: $spacer5 $spacer15;
+    font-size: $font-size14;
+  }
+
+  .btn {
+    @extend %button-base;
+    background-color: $btn-background-color;
+    color: $btn-color;
+    &:hover {
+      color: $btn-color;
+      background-color: $btn-background-color-hover;
+    }
+    &.btn--small {
+      @extend %button-small;
+    }
+    &.btn--white {
+      background-color: $color-white;
+      color: $btn-color;
+    }
+    &.btn--red {
+      background-color: $color4;
+      color: $btn-color;
+    }
+  }
+
+  .btn-ghost {
+    @extend %button-base;
+    background-color: transparent;
+    border: 2px solid $btn-border-color;
+    color: $btn-border-color;
+    &:hover {
+      border-color: $btn-border-color-hover;
+      background-color: $btn-background-color-hover;
+      color: $btn-color;
+    }
+    &.btn-ghost--white {
+      border-color: $color-white;
+      color: $color-white;
+      &:hover {
+        border-color: $color-white;
+        background-color: $color-white;
+        color: $color-texts;
+      }
+    }
+    &.btn-ghost--small {
+      @extend %button-small;
+    }
+  }
+}

@@ -1,0 +1,309 @@
+@charset "utf-8";
+@import "sass/functions/all";
+@import "sass/mixins/all";
+@import "sass/modules/all";
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900');
+
+.web {
+  &__header {
+    overflow: hidden;
+    background: url($url-images + 'header-bg.jpg') no-repeat center top;
+    background-size: cover;
+
+    &-image {
+      display: block;
+      margin: 0 auto;
+    }
+  }
+
+  &__footer {
+    text-align: center;
+    background-color: $color6;
+    padding-top: $spacer80;
+    padding-bottom: $spacer40;
+    font-weight: 100;
+    color: $color2;
+    @include text-line-height($font-size24);
+
+    a {
+      color: $color2;
+    }
+
+    &-logo {
+      width: 197px;
+      height: 30px;
+    }
+
+    &-credits {
+      margin-top: $spacer40;
+      color: $color-texts;
+    }
+  }
+
+  @include media() {
+    &__header,
+    &__footer,
+    section {
+      padding-left: $spacer20;
+      padding-right: $spacer20;
+    }
+
+    &__header {
+      height: 500px;
+      &-logo {
+        display: block;
+        width: 260px;
+        height: 40px;
+        margin: $spacer60 auto;
+      }
+    }
+  }
+
+  @include media(small) {
+    &__header {
+      height: 844px;
+    }
+  }
+}
+
+// Section Information
+.info {
+  overflow: hidden;
+  border-top: 1px solid $color3;
+
+  &__graphic {
+    background: url($url-images + 'info-bg.jpg') no-repeat left top;
+    background-size: contain;
+  }
+
+  &__title {
+    display: block;
+    text-transform: uppercase;
+    font-weight: 100;
+    color: $color2;
+  }
+
+  &__subtitle {
+    display: block;
+    font-weight: 100;
+    color: $color1;
+  }
+
+  &__texts {
+    margin-bottom: $spacer30;
+    font-weight: 100;
+    color: $color-texts;
+    @include text-line-height($font-size30);
+  }
+
+  &__cta {
+    display: block;
+    max-width: 240px;
+    @include transition(transform $transitions);
+    &:hover {
+      @include transform(scale(1.05));
+    }
+  }
+
+  @include media() {
+    &__content {
+      padding-top: $spacer45;
+      padding-bottom: $spacer45;
+    }
+
+    &__cta {
+      margin: 0 auto;
+    }
+
+    &__title {
+      font-size: 46px;
+    }
+
+    &__subtitle {
+      font-size: $font-size20;
+    }
+  }
+
+  @include media(small) {
+    height: 609px;
+    &__content {
+      padding: $spacer45;
+      @include align-center-middle(609px);
+      &-wrapper {
+        text-align: left;
+      }
+    }
+
+    &__title {
+      font-size: 76px;
+    }
+
+    &__subtitle {
+      font-size: $font-size40;
+    }
+
+  }
+
+}
+
+// Section Steps
+.steps {
+  color: $color-white;
+
+  &__title {
+    text-transform: uppercase;
+    font-weight: 100;
+  }
+
+  &__subtitle {
+    display: block;
+    font-weight: 300;
+  }
+
+  &__content {
+    margin-top: $spacer60;
+  }
+
+  @include media() {
+    padding-top: $spacer80;
+    padding-bottom: $spacer80;
+    background-color: $color2;
+
+    &__title {
+      font-size: $font-size40;
+    }
+
+    &__subtitle {
+      padding: 0 $spacer10;
+      margin: $spacer30 auto;
+    }
+  }
+
+  @include media(small) {
+    padding-top: $spacer80;
+    background: url($url-images + 'steps-bg.svg') repeat-x center top $color-white;
+
+    &__title {
+      font-size: $font-size50;
+    }
+
+    &__subtitle {
+      text-align: left;
+      padding: 0 $spacer50;
+      margin: $spacer20 0 $spacer30;
+    }
+  }
+}
+
+// Section Download
+.download {
+  padding: $spacer80 0;
+
+  &__title {
+    display: block;
+    font-size: $font-size28;
+    font-weight: 100;
+    text-transform: uppercase;
+    color: $color2;
+    margin: $spacer20 auto;
+  }
+
+  &__cta {
+    display: block;
+    max-width: 240px;
+    margin: 0 auto;
+    @include transition(transform $transitions);
+    &:hover {
+      @include transform(scale(1.05));
+    }
+  }
+
+  &__appicon {
+    max-width: 100px;
+    margin: 0 auto;
+  }
+}
+
+// ------------------------
+// Animations
+
+$animation-initial-time: 1s;
+$delay: .2;
+
+@include media(small) {
+  %base-fadeinAnimation {
+    opacity: 0;
+    @include animation(fadein $animation-initial-time ease-in forwards);
+  }
+
+  %base-slideinTopAnimation {
+    @include animation(slideinTop 1.5s ease-out forwards);
+  }
+
+  .web {
+    &__header,
+    &__footer,
+    section {
+      @extend %base-fadeinAnimation;
+    }
+
+    @for $i from 1 through 4 {
+      section:nth-child(#{$i}) {
+        $currentDelay: $delay * $i;
+        @include animation-delay(#{$currentDelay}s);
+      }
+    }
+
+
+    h2, h3, p, nav {
+      @extend %base-slideinTopAnimation;
+    }
+
+    &__header {
+      &-logo {
+        opacity: 0;
+        @extend %base-fadeinAnimation;
+        @include animation-delay(1.2s);
+      }
+      &-image {
+        @include animation(slideinBottom 1.5s ease-out forwards);
+      }
+    }
+
+  }
+
+  .steps {
+    &__item {
+      opacity: 0;
+      @include transition(transform $transitions);
+      @extend %base-fadeinAnimation;
+
+      &:hover {
+        @include transform(scale(1.05));
+      }
+
+      @for $i from 1 through 3 {
+        &:nth-child(#{$i}) {
+          $currentDelay: $delay * $i;
+          @include animation-delay(#{$currentDelay}s);
+        }
+      }
+    }
+  }
+
+}
+
+// ------------------------
+// Legal
+.legal {
+  overflow: hidden;
+  background: url($url-images + 'header-bg.jpg') no-repeat center top;
+  background-size: contain;
+  font-weight: 100;
+  @include text-line-height($font-size30);
+
+  &__content {
+    padding: $spacer50 $spacer20;
+    text-align: left;
+  }
+}

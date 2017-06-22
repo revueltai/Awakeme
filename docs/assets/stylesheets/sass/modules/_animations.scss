@@ -1,0 +1,74 @@
+@include keyframes(shake) {
+  from, to {
+    @include transform(translate3d(0, 0, 0));
+  }
+
+  10%, 30%, 50%, 70%, 90% {
+    @include transform(translate3d(-10px, 0, 0));
+  }
+
+  20%, 40%, 60%, 80% {
+    @include transform(translate3d(10px, 0, 0));
+  }
+}
+
+@include keyframes(fadein) {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@include keyframes(slideinTop) {
+  0% {
+    @include transform(translate3d(0, -100%, 0));
+  }
+  100% {
+    @include transform(translate3d(0, 0, 0));
+  }
+}
+
+@include keyframes(slideinBottom) {
+  0% {
+    @include transform(translate3d(0, 100%, 0));
+  }
+  100% {
+    @include transform(translate3d(0, 0, 0));
+  }
+}
+
+@include keyframes(scaleIn) {
+  from, 20%, 40%, 60%, 80%, to {
+    @include animation-timing-function(cubic-bezier(0.215, 0.610, 0.355, 1.000));
+  }
+
+  0% {
+    opacity: 0;
+    @include transform(scale3d(0, 0, 0));
+  }
+
+  20% {
+    @include transform(scale3d(1.1, 1.1, 1.1));
+  }
+
+  40% {
+    @include transform(scale3d(.9, .9, .9));
+  }
+
+  60% {
+    opacity: 1;
+    @include transform(scale3d(1.03, 1.03, 1.03));
+  }
+
+  80% {
+    @include transform(scale3d(.97, .97, .97));
+  }
+
+  to {
+    opacity: 1;
+    @include transform(scale3d(1, 1, 1));
+  }
+}

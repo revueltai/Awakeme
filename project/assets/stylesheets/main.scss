@@ -1,0 +1,645 @@
+@charset "utf-8";
+@import "sass/functions/all";
+@import "sass/mixins/all";
+@import "sass/modules/all";
+
+// App - Shared
+.app {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  &__logo {
+    display: block;
+    fill: $color1;
+  }
+
+  &__button {
+    width: 100%;
+    &-wrapper {
+      position: fixed;
+      left:0;
+      bottom: 0;
+      width: 100%;
+      padding: $spacer20;
+      display: block;
+      text-transform: uppercase;
+      @include gradient-simple(rgba($color-white, 0), $color-white, -30%, 33%, false);
+    }
+  }
+
+  &__field {
+    text-align: left;
+    &:not(:last-child) {
+      margin-bottom: $spacer30;
+    }
+  }
+
+  &__close {
+    position: absolute;
+    display: none;
+    top: 0;
+    right: 0;
+    fill: $color3;
+    width: $spacer50;
+    height: $spacer50;
+    padding: 17px 0;
+    @include transition(fill $transitions);
+    &.active {
+      display: block;
+    }
+  }
+
+  &__form-element {
+    position: relative;
+    border: 1px solid $color3;
+    background-color: $color-white;
+    font-family: $font-family;
+    font-size: $font-size16;
+    font-weight: 300;
+    padding: $spacer15;
+    margin: 0;
+    width: 100%;
+    height: $spacer50;
+    border-radius: $border-radius;
+
+    input, select {
+      display: block;
+      background-color: $color-white;
+      font-family: $font-family;
+      font-size: $font-size16;
+      font-weight: 300;
+      color: $color1;
+      border: 0;
+    }
+
+    input {
+      width: 90%;
+    }
+    
+    select {
+      width: 100%;
+    }
+
+  }
+
+  &__label {
+    display: block;
+    font-family: $font-family;
+    font-size: $font-size12;
+    font-weight: 300;
+    color: $color1;
+    text-align: left;
+    text-transform: uppercase;
+    margin-bottom: $spacer5;
+  }
+
+  &__input {
+    @include text-truncate();
+  }
+
+  &__map {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $color-black;
+    @include z-index(0);
+  }
+
+  &__topbar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: $spacer40;
+    background-color: $color-white;
+    border-bottom: 1px solid $color3;
+    @include z-index(2);
+    @include clearfix();
+
+    &-menu {
+      float: left;
+      fill: $color1;
+      width: $spacer35;
+      height: $spacer40;
+      padding: $spacer10;
+    }
+
+    &-logo {
+      float: right;
+      fill: $color1;
+      width: $spacer70;
+      height: $spacer20;
+      margin: $spacer10;
+    }
+  }
+
+  &--error {
+    border-color: $color5;
+    @include animation(shake .5s ease-in-out forwards);
+  }
+}
+
+// Views
+.view {
+  // display: none;
+  position: absolute;
+  padding: $spacer20;
+  width: 100%;
+  overflow: hidden;
+  background-color: $color-white;
+  @include align-center-middle(100%);
+  @include transition(transform $transitions);
+
+  // Unloading elements
+  &--unloading {
+    &.view__loader {
+      @include transform(translate3d(-100%, 0, 0));
+      @include align-center-middle(100%);
+    }
+  }
+
+  // Loading elements
+  &--loading {
+    &.view__settings {
+      @include transform(translate3d(0, 0, 0));
+    }
+
+    &.view__map {
+      @include transform(translate3d(0, 0, 0));
+    }
+  }
+
+  // Active elements
+  &--active {
+    &.view {
+      @include transform(translate3d(0, 0, 0));
+    }
+
+    &.view__loader {
+      @include align-center-middle(100%);
+    }
+  }
+
+  // Views
+  &__loader {
+    @include animation(fadein 1s ease-in-out forwards);
+    @include transform(translate3d(-100%, 0, 0));
+    @include z-index(14);
+    &-logo {
+      display: block;
+      margin: 0 auto $spacer20;
+      width: 160px;
+      height: $spacer30;
+    }
+
+    &-wheel {
+      fill: #044057;
+      width: $spacer50;
+      height: $spacer50;
+    }
+
+    &-sign {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      display: block;
+      text-align: center;
+      padding: $spacer20;
+      font-size: $font-size12;
+      color: rgba($color3, 1);
+    }
+  }
+
+  &__main {
+    background-color: $color-white;
+    @include transform(translate3d(-100%, 0, 0));
+    @include z-index(15);
+    &-logo {
+      width: 100%;
+      height: $spacer50;
+      margin-bottom: $spacer40;
+    }
+  }
+
+  &__map {
+    @include transform(translate3d(-100%, 0, 0));
+    @include z-index(12);
+    &-sidebar,
+    &-zoom,
+    &-markers {
+      overflow: hidden;
+      position: fixed;
+      width: $spacer40;
+      background-color: $color-white;
+      border: 1px solid $color3;
+      @include z-index(2);
+    }
+
+    &-sidebar,
+    &-zoom {
+      left: 0;
+      border-left: none;
+      border-radius: 0 $spacer10 $spacer10 0;
+    }
+
+    &-sidebar {
+      top: $spacer60;
+      height: 300px;
+      padding: $spacer10;
+    }
+
+    &-zoom {
+      top: $spacer60 + 300px + $spacer20;
+      &-button {
+        fill: $color1;
+        display: block;
+        height: $spacer35;
+        width: 100%;
+      }
+      &--in {
+        padding: $spacer10 $spacer10 $spacer5;
+      }
+      &--out {
+        padding: $spacer5 $spacer10 $spacer10;
+      }
+    }
+
+    &-markers {
+      right: 0;
+      top: $spacer60;
+      border-right: none;
+      border-radius: $spacer10 0 0 $spacer10;
+      &-item {
+        display: block;
+        width: 100%;
+        height: $spacer40;
+        margin: 0 auto;
+        @include transition(transform $transitions);
+        @include transform(scale(.8));
+        &.active {
+          @include transform(scale(1));
+        }
+      }
+      &--main {
+        fill: $color6;
+        padding: $spacer10 $spacer10 $spacer5;
+      }
+      &--destiny {
+        fill: $color7;
+        padding: $spacer5 $spacer10 $spacer10;
+      }
+    }
+
+
+    &-bottombar {
+      position: fixed;
+      left: 0;
+      bottom: $spacer20;
+      background-color: $color-white;
+      border: 1px solid $color3;
+      border-left: none;
+      border-right: none;
+      padding: $spacer15 $spacer10;
+      width: 100%;
+      text-align: left;
+      @include z-index(1);
+      @include clearfix();
+      &-icon {
+        width: 27px;
+        height: 30px;
+        fill: $color1;
+        float: left;
+      }
+      &-info {
+        display: block;
+        margin-left: $spacer35;
+        font-size: $font-size14;
+        font-weight: 300;
+        color: $color1;
+        strong {
+          font-weight: 400;
+        }
+      }
+      &-direction {
+        @include text-truncate();
+      }
+      &-details {
+        margin-top: $spacer5;
+        text-transform: uppercase;
+        font-size: $font-size8;
+        color: $color2;
+        span:not(:last-child) {
+          margin-right: $spacer5;
+        }
+      }
+    }
+  }
+
+  &__settings {
+    @include transform(translate3d(100%, 0, 0));
+    @include z-index(13);
+    &-content {
+      width: 100%;
+      margin-top: -($spacer40);
+    }
+    &-graphic {
+      overflow: hidden;
+    }
+  }
+
+  &__ending {
+    @include transform(translate3d(0, -100%, 0));
+    @include z-index(16);
+    &-message {
+      font-size: $font-size30;
+      font-weight: 300;
+      text-transform: uppercase;
+      color: $color1;
+    }
+    &-address {
+      display: block;
+      max-width: 300px;
+      margin: $spacer10 auto 0;
+      color: $color2;
+      font-size: $font-size14;
+      @include text-truncate();
+    }
+    &-icon {
+      fill: $color-white;
+      width: $spacer50;
+      height: $spacer50;
+      &-wrapper {
+        display: block;
+        margin: 0 auto $spacer20;
+        background-color: $color2;
+        border-radius: $spacer80;
+        overflow: hidden;
+        width: $spacer80;
+        @include align-center-middle($spacer80);
+      }
+    }
+  }
+
+  &__no-connection {
+    background-color: rgba($color-white, 1);
+    @include transform(translate3d(0, -100%, 0));
+    @include z-index(18);
+    &-message {
+      font-size: $font-size24;
+      font-weight: 300;
+      text-transform: uppercase;
+      color: $color1;
+    }
+    &-subtitle {
+      display: block;
+      max-width: 300px;
+      margin: $spacer10 auto;
+      color: $color2;
+      font-size: $font-size14;
+      @include text-truncate();
+    }
+    &-icon {
+      fill: $color2;
+      width: $spacer50;
+      height: $spacer50;
+      &-wrapper {
+        display: block;
+        margin: 0 auto;
+        overflow: hidden;
+        width: $spacer50;
+        @include align-center-middle($spacer50);
+      }
+    }
+  }
+
+  &__error {
+    @include transform(translate3d(0, -100%, 0));
+    @include z-index(18);
+
+    &-message {
+      font-size: $font-size30;
+      font-weight: 300;
+      text-transform: uppercase;
+      color: $color1;
+    }
+
+    &-type {
+      display: block;
+      max-width: 300px;
+      margin: $spacer10 auto 0;
+      color: $color2;
+      font-size: $font-size14;
+      @include text-truncate();
+    }
+  }
+}
+
+// Maps View - Sidebar - Position
+.position {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  @at-root {
+
+    // Position for Settings view
+    .view__settings & {
+      position: relative;
+      height: 150px;
+      padding: $spacer20;
+      background-color: $color2;
+      border-radius: $spacer15;
+      margin-bottom: $spacer25;
+
+      &--finished {
+        .position__marker-destination {
+          border-color: rgba($color-white, 1);
+        }
+      }
+
+      &__information {
+        margin-right: $spacer5;
+        color: $color-white;
+        text-align: left;
+        font-size: $font-size16;
+        font-weight: 300;
+        &-distance {
+          display: block;
+          font-size: $font-size50;
+          height: $spacer50;
+          @include text-line-height($font-size50);
+        }
+      }
+
+      &__content {
+        position: relative;
+        width: 100%;
+        height: $spacer30;
+      }
+
+      &__marker {
+        position: absolute;
+        top: $spacer20;
+        background-color: $color2;
+        height: $spacer15;
+
+        &-origin {
+          border-radius: $spacer5;
+          height: 7px;
+          width: 2px;
+          left: 0;
+          top: 24px;
+          margin-left: -1px;
+          border: 2px solid rgba($color-white, 1);
+        }
+
+        &-destination {
+          border-radius: $spacer60;
+          width: $spacer15;
+          right: 0;
+          margin-right: -1px;
+          border: 4px solid rgba($color1, 1);
+          @include transition(border-color $transitions);
+        }
+
+        &-main {
+          border: 0;
+          padding: 0;
+          top: 0;
+          left: 0;
+          width: $spacer15;
+          height: $spacer15;
+          background-color: transparent;
+          margin-left: -($spacer15 / 2);
+          @include transition(left $transitions);
+          &-icon {
+            width: 100%;
+            height: $spacer25;
+            fill: $color-white;
+          }
+        }
+      }
+
+      &__line {
+        position: absolute;
+        border: 2px solid rgba($color-white, 1);
+        right: 0;
+        bottom: 0;
+        height: 2px;
+        width: 100%;
+        margin: $spacer10 auto 0;
+        padding: 0;
+        @include transition(width $transitions);
+        &-active {
+          width: 100%;
+          border-color: rgba($color1, 1);
+        }
+      }
+
+    }
+
+    // Position for Map view
+    .view__map & {
+
+      &--finished {
+        .position__marker-main {
+          padding: 0;
+          height: $spacer20;
+          overflow: hidden;
+        }
+        .position__marker-main-sign {
+          opacity: 0;
+          bottom: 0;
+        }
+        .position__line-active {
+          height: 0;
+          bottom: 0;
+        }
+      }
+
+      &__marker {
+        position: absolute;
+        left: 0;
+        background-color: $color-white;
+        border-radius: $spacer60;
+        border: 4px solid $color3;
+        width: $spacer20;
+        height: $spacer20;
+
+        &-origin {
+          top: 0;
+        }
+
+        &-destination {
+          bottom: 0;
+          border-color: $color1;
+        }
+
+        &-main {
+          border: 0;
+          padding: 0;
+          height: auto;
+          background-color: transparent;
+          @include transition(bottom $transitions, height $transitions);
+
+          &-icon {
+            width: 100%;
+            height: $spacer25;
+            fill: $color2;
+          }
+
+          &-sign {
+            display: block;
+            border: 0;
+            padding: 2px $spacer5;
+            margin-top: -4px;
+            margin-left: -($spacer10);
+            font-weight: 300;
+            font-size: $font-size8;
+            color: $color2;
+            background-color: $color-white;
+            text-transform: uppercase;
+            text-align: center;
+            height: auto;
+            width: $spacer40 - 1px;
+            opacity: 1;
+            @include text-truncate();
+            @include transition(all $transitions);
+            &.hidden {
+              opacity: 0;
+            }
+          }
+        }
+      }
+
+      &__line {
+        position: absolute;
+        border: 2px solid $color3;
+        left: 0;
+        bottom: 0;
+        width: 2px;
+        height: 100%;
+        margin-left: 8px;
+        @include transition(bottom $transitions);
+        &-active {
+          border-color: $color1;
+        }
+      }
+    }
+
+  }
+
+}
+
+// Google Places - List items
+.pac-item {
+  padding: $spacer10;
+}
+.hdpi.pac-logo:after {
+  display: none;
+}

@@ -1,0 +1,23 @@
+@mixin fonts($fonts-map) {
+
+  @each $fonts, $values in $fonts-map {
+
+    $family: map-get($values, 'family');
+    $name: map-get($values, 'name');
+    $code-name: map-get($values, 'code-name');
+    $weight: map-get($values, 'weight');
+    $style: map-get($values, 'style');
+    $unicode-range: map-get($values, 'unicode-range');
+    $url: map-get($values, 'url');
+
+    @font-face {
+      font-family: $family;
+      font-style: $style;
+      font-weight: $weight;
+      unicode-range: #{$unicode-range};
+      src: local($name),
+           local($code-name),
+           url($url-fonts + $url) format('woff2');
+    }
+  }
+}

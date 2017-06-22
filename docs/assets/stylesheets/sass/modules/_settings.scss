@@ -1,0 +1,102 @@
+// Prefixes
+$prefixes: webkit moz ms o spec;
+$prefixes-wo-ie: webkit moz o spec;
+
+// urls
+$url-images: '../images/' !default;
+$url-fonts: '../fonts/' !default;
+
+// Colors
+$color1: #003838;
+$color2: #009f9d;
+$color3: #bebebe;
+$color4: #380000;
+$color5: #b80000;
+$color6: #f2f2f2;
+
+$color-texts: #383838;
+$color-button: $color1;
+$color-button-hover: lighten($color-button, 8%);
+$color-white: #ffffff;
+$color-black: #000000;
+
+
+// Media Queries
+$media-sizes: (
+  default: 639px,
+  small: 640px,
+  medium: 970px,
+  large: 1024px
+);
+
+$media-devices: (
+  iphone6Plus: (w: 414px, h: 736px , pr: 3),
+  iphone6: (w: 375px, h: 667px , pr: 2),
+  iphone5: (w: 320px, h: 568px , pr: 2),
+  iphone4: (w: 320px, h: 480px , pr: 2),
+  ipadPro: (w: 1024px, h: 1366px , pr: 2),
+  ipad: (w: 768px, h: 1024px , pr: 2),
+  ipadMini: (w: 768px, h: 1024px , pr: 1),
+  s2: (w: 320px, h: 533px , pr: 1.5),
+  s3: (w: 360px, h: 640px , pr: 2),
+  s4: (w: 360px, h: 640px , pr: 3),
+  s5: (w: 360px, h: 640px , pr: 3),
+  s6: (w: 360px, h: 640px , pr: 4),
+  s7: (w: 360px, h: 640px , pr: 4)
+);
+
+// Grid
+$grid-size-small: 640px;
+$grid-size-medium: 980px;
+$grid-size-large: 1156px;
+$grid-total-columns: 10;
+
+// Spacers: Margins and Paddings
+$spacer5: 5px;
+$spacer10: 10px;
+$spacer15: 15px;
+$spacer20: 20px;
+$spacer25: 25px;
+$spacer30: 30px;
+$spacer35: 35px;
+$spacer40: 40px;
+$spacer45: 45px;
+$spacer50: 50px;
+$spacer60: 60px;
+$spacer70: 70px;
+$spacer80: 80px;
+$spacer90: 90px;
+
+// Buttons
+$btn-border-radius: $spacer50;
+$btn-color: $color-white;
+$btn-background-color: $color-button;
+$btn-background-color-hover: lighten($btn-background-color, 8%);
+$btn-border-color: $btn-background-color;
+$btn-border-color-hover: $btn-background-color-hover;
+
+// General
+$border-radius: $spacer15;
+$transitions: .3s ease-in-out;
+$animation-motion-offset: $spacer35;
+
+// Fonts
+$font-family: 'Roboto', sans-serif;
+$font-size8: 8px;
+$font-size9: 9px;
+$font-size10: 10px;
+$font-size11: 11px;
+$font-size12: 12px;
+$font-size14: 14px;
+$font-size16: 16px;
+$font-size18: 18px;
+$font-size20: 20px;
+$font-size24: 24px;
+$font-size28: 28px;
+$font-size30: 30px;
+$font-size36: 36px;
+$font-size40: 40px;
+$font-size45: 45px;
+$font-size50: 50px;
+
+$fonts-list: ();

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://maps.googleapis.com/ data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' https://maps.gstatic.com https://csi.gstatic.com/ data: content:;">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+  <link rel="stylesheet" type="text/css" href="assets/stylesheets/main.css">
+  <title>Awakeme</title>
+</head>
+
+<body>
+
+  <main class="app">
+
+    <!-- View Loader -->
+    <div class="view view__loader view--active" id="view-loader">
+      <div class="view__content">
+
+        <svg class="view__loader-logo">
+          <use xlink:href="#icon-logo" />
+        </svg>
+
+        <svg class="view__loader-wheel">
+          <use xlink:href="#icon-loader" />
+        </svg>
+
+        <div class="view__loader-sign">Tip: For a better experience, please enable vibrations.</div>
+
+      </div>
+    </div>
+
+    <!-- View Landing -->
+    <div class="view view__main" id="view-landing">
+      <div class="view__content">
+        <svg class="view__main-logo app__logo">
+          <use xlink:href="#icon-logo" />
+        </svg>
+
+        <div class="view__main-options">
+
+          <div class="app__field app__field--destiny">
+            <label class="app__label" for="view-landing-search">Enter a destination:</label>
+            <div class="app__form-element">
+              <input class="app__input" type="text" placeholder="Type in an address or a location" id="view-landing-search" value="Alexanderplatz, Berlin, Germany">
+              <svg class="app__close" id="view-landing-search-clean">
+                <use xlink:href="#icon-close" />
+              </svg>
+            </div>
+          </div>
+
+          <div class="app__field app__field--radius">
+            <label class="app__label" for="view-landing-radius">Alarm rings within:</label>
+            <div class="app__form-element">
+              <select class="app__select" name="radius" id="view-landing-radius">
+                <option value="50">50m from destination</option>
+                <option value="100">100m from destination</option>
+                <option value="150">150m from destination</option>
+                <option value="200">200m from destination</option>
+                <option value="300">300m from destination</option>
+                <option value="400">400m from destination</option>
+                <option value="500">500m from destination</option>
+                <option value="750">750m from destination</option>
+                <option value="1000">1km from destination</option>
+                <option value="1500">1.5km from destination</option>
+                <option value="2000">2km from destination</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="app__button-wrapper">
+        <div class="btn app__button" id="view-landing-button">
+          Start
+        </div>
+      </div>
+    </div>
+
+    <!-- View Map -->
+    <div class="view view__map" id="view-map">
+      <header class="app__topbar">
+        <div class="app__topbar-content">
+          <div class="app__topbar-button">
+            <svg class="app__topbar-menu" id="map-menu-button">
+              <use xlink:href="#icon-menu" />
+            </svg>
+          </div>
+          <svg class="app__topbar-logo">
+            <use xlink:href="#icon-logo" />
+          </svg>
+        </div>
+      </header>
+
+      <div class="view__map-sidebar">
+        <div class="view__map-sidebar-content position" id="map-position">
+          <div class="position__line" id="map-line-total-distance"></div>
+          <div class="position__line position__line-active" id="map-line-current-distance"></div>
+          <div class="position__marker position__marker-origin"></div>
+          <div class="position__marker position__marker-destination"></div>
+          <div class="position__marker position__marker-main" id="map-marker-main">
+            <svg class="position__marker-main-icon">
+              <use xlink:href="#icon-marker-position" />
+            </svg>
+            <div class="position__marker-main-sign" id="map-marker-sign"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="view__map-zoom">
+        <svg class="view__map-zoom-button view__map-zoom--in" id="view-map-zoom-in">
+          <use xlink:href="#icon-zoom-in" />
+        </svg>
+        <svg class="view__map-zoom-button view__map-zoom--out" id="view-map-zoom-out">
+          <use xlink:href="#icon-zoom-out" />
+        </svg>
+      </div>
+
+      <div class="view__map-markers">
+        <svg class="view__map-markers-item view__map-markers--main" id="view-map-markers-main">
+          <use xlink:href="#icon-marker-position" />
+        </svg>
+        <svg class="view__map-markers-item view__map-markers--destiny" id="view-map-markers-destiny">
+          <use xlink:href="#icon-marker-position" />
+        </svg>
+      </div>
+
+      <div class="view__map-bottombar">
+        <svg class="view__map-bottombar-icon">
+          <use xlink:href="#icon-marker-stroke" />
+        </svg>
+        <div class="view__map-bottombar-info">
+          <div class="view__map-bottombar-direction">
+            <strong>Destination:</strong>
+            <span id="map-address"></span>
+          </div>
+          <div class="view__map-bottombar-details">
+            <span>Distance: <span id="map-distance"></span></span>
+            <span>Alarm radius: <span id="map-radius"></span>Mt</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="app__map" id="view-map-canvas"></div>
+    </div>
+
+    <!-- View Settings -->
+    <div class="view view__settings" id="view-settings">
+      <header class="app__topbar">
+        <div class="app__topbar-content">
+          <div class="app__topbar-button">
+            <svg class="app__topbar-menu" id="view-settings-menu-button">
+              <use xlink:href="#icon-menu" />
+            </svg>
+          </div>
+          <svg class="app__topbar-logo">
+            <use xlink:href="#icon-logo" />
+          </svg>
+        </div>
+      </header>
+
+      <div class="view__settings-content">
+        <div class="view__settings-sign" id="view-settings-save-sign">Changes Saved</div>
+        <div class="view__settings-graphic position" id="view-settings-position">
+          <div class="position__information">
+            <div>
+              <span class="position__information-distance" id="view-settings-marker-sign">-</span>
+            </div>
+            Distance to destination
+          </div>
+
+          <div class="position__content">
+            <div class="position__line" id="view-settings-line-total-distance"></div>
+            <div class="position__line position__line-active" id="view-settings-line-current-distance"></div>
+            <div class="position__marker position__marker-origin"></div>
+            <div class="position__marker position__marker-destination"></div>
+            <div class="position__marker position__marker-main" id="view-settings-marker-main">
+              <svg class="position__marker-main-icon">
+                <use xlink:href="#icon-marker-position" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="app__field">
+          <label class="app__label" for="view-settings-search">Destination:</label>
+          <div class="view__settings-field-content">
+            <div class="view__settings-address"></div>
+            <div class="app__form-element">
+              <input class="app__input" type="text" placeholder="Type in an address or a location" id="view-settings-search" value="">
+              <svg class="app__close" id="view-settings-search-clean">
+                <use xlink:href="#icon-close" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="app__field app__field--radius">
+          <label class="app__label" for="view-settings-radius">Alarm rings within:</label>
+          <div class="app__form-element">
+            <select class="app__select" name="radius" id="view-settings-radius">
+              <option value="50">50m from destination</option>
+              <option value="100">100m from destination</option>
+              <option value="150">150m from destination</option>
+              <option value="200">200m from destination</option>
+              <option value="300">300m from destination</option>
+              <option value="400">400m from destination</option>
+              <option value="500">500m from destination</option>
+              <option value="750">750m from destination</option>
+              <option value="1000">1km from destination</option>
+              <option value="1500">1.5km from destination</option>
+              <option value="2000">2km from destination</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="app__field app__field--alarm">
+          <label class="app__label" for="view-settings-alarm">Alarm duration:</label>
+          <div class="app__form-element">
+            <select class="app__select" name="alarm-radius" id="view-settings-alarm">
+              <option value="1000">1 second</option>
+              <option value="2000">2 second</option>
+              <option value="3000">3 second</option>
+              <option value="4000">4 second</option>
+              <option value="5000">5 second</option>
+            </select>
+          </div>
+        </div>
+        <div class="app__field">
+          <a class="view__settings-legal" id="view-settings-legal" href="#">Legal Notices</a>
+        </div>
+      </div>
+
+      <div class="app__button-wrapper">
+        <div class="btn btn--red app__button" id="view-settings-reset-button">
+          Reset App
+        </div>
+      </div>
+    </div>
+
+    <!-- View ending -->
+    <div class="view view__ending" id="view-ending">
+      <div class="view__content">
+        <div class="view__ending-icon-wrapper">
+          <svg class="view__ending-icon">
+            <use xlink:href="#icon-checked" />
+          </svg>
+        </div>
+        <div class="view__ending-message">
+          You have arrived!
+          <span class="view__ending-address" id="view-ending-address"></span>
+        </div>
+        <div class="app__button-wrapper">
+          <div class="btn app__button" id="view-ending-button">
+            Close
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- View no connection -->
+    <div class="view view__no-connection" id="view-no-connection">
+      <div class="view__content">
+        <div class="view__no-connection-message">
+          No connection available
+          <span class="view__no-connection-subtitle">Reconnecting...</span>
+        </div>
+        <div class="view__no-connection-icon-wrapper">
+          <svg class="view__no-connection-icon">
+            <use xlink:href="#icon-loader" />
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- View errors -->
+    <div class="view view__error" id="view-error">
+      <div class="view__content">
+        <div class="view__error-message">
+          <span id="view-error-type"></span>
+          <span class="view__error-type" id="view-error-message"></span>
+        </div>
+        <div class="app__button-wrapper">
+          <div class="btn app__button" id="view-error-button">
+            Reset App
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="cordova.js" type="text/javascript"></script>
+  <script src="assets/javascripts/eventbus.js" type="text/javascript"></script>
+  <script src="assets/javascripts/model.js" type="text/javascript"></script>
+  <script src="assets/javascripts/view.js" type="text/javascript"></script>
+  <script src="assets/javascripts/controller.js" type="text/javascript"></script>
+  <script src="assets/javascripts/main.js" type="text/javascript"></script>
+
+  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" xml:space="preserve" style="display:none;">
+    <symbol viewBox="0 0 524 81" id="icon-logo">
+      <path d="M158.1,0h3.3l-21.7,81h-3.4L113.4,4.9L90.6,81h-3.4L65.4,0h3.3l20.4,76l22.7-76h3.3l22.5,76 L158.1,0z M33.8,0L64,81h-3.3l-9-24H12.2l-9,24H0l9-24H0.2l0-3h9.9l20-54H33.8z M50.6,54L32,3.8L13.3,54H50.6z M219.2,57l9,24H225 l-9-24h-39.5l-9,24h-3.3l9-24h-8.8l0-3h9.6v-0.1L194.4,0h3.7l20,54h9.9l0,3H219.2z M214.8,54L196.2,3.8L177.6,54H214.8z M524,0h-49 v38h-8v3h8v40h49v-3h-46V41h29v-3h-29V3h46V0z M517,41v-3h-5v3H517z M295.2,0h-4.3L244,46.9V0h-3v81h3V50.4l13-12L294.1,81h3.9 l-38.7-44.7L295.2,0z M415.2,65.6L382,0h-4v81h3V4.8L414,70h2.4L450,4.5V81h3V0h-4.6L415.2,65.6z M313,38h-8v3h8v40h49v-3h-46V41h30 v-3h-30V3h46V0h-49V38z"/>
+    </symbol>
+    <symbol viewBox="0 0 212.982 212.982" id="icon-close">
+    	<path d="M131.804,106.491l75.936-75.936c6.99-6.99,6.99-18.323,0-25.312
+    		c-6.99-6.99-18.322-6.99-25.312,0l-75.937,75.937L30.554,5.242c-6.99-6.99-18.322-6.99-25.312,0c-6.989,6.99-6.989,18.323,0,25.312
+    		l75.937,75.936L5.242,182.427c-6.989,6.99-6.989,18.323,0,25.312c6.99,6.99,18.322,6.99,25.312,0l75.937-75.937l75.937,75.937
+    		c6.989,6.99,18.322,6.99,25.312,0c6.99-6.99,6.99-18.322,0-25.312L131.804,106.491z"/>
+    </symbol>
+    <symbol viewBox="0 0 35 44" id="icon-marker-stroke">
+        <path d="M17.5,4C24.9,4,31,10.1,31,17.6c0,0.8-0.1,1.7-0.2,2.6l0,0.1l0,0c0,0.1,0,0.2-0.1,0.3
+      c-0.2,0.9-0.5,1.8-0.9,2.7l0,0.1l0,0.1c-1.6,3.8-5,9.4-12.2,15.7C10.3,32.9,6.9,27.2,5.3,23.5l0-0.1l0-0.1
+      c-0.4-0.9-0.7-1.8-0.9-2.7c0-0.2-0.1-0.3-0.1-0.3l0,0l0-0.1C4.1,19.4,4,18.5,4,17.6C4,10.1,10.1,4,17.5,4 M17.5,0
+      C7.9,0,0,7.9,0,17.6c0,1.1,0.1,2.2,0.3,3.3c0,0.1,0,0.3,0.1,0.6c0.3,1.2,0.7,2.4,1.2,3.5c1.9,4.5,6,11.3,15.1,18.7
+      c0.2,0.2,0.5,0.3,0.8,0.3s0.5-0.1,0.8-0.3c9.1-7.4,13.2-14.2,15.1-18.7c0.5-1.1,0.9-2.3,1.2-3.5c0.1-0.3,0.1-0.5,0.1-0.6
+      c0.2-1.1,0.3-2.2,0.3-3.3C35,7.9,27.1,0,17.5,0L17.5,0z" />
+    </symbol>
+    <symbol viewBox="0 0 48.3 60" id="icon-marker-map">
+        <path d="M24.2,0C10.8,0,0,10.8,0,24.1c0,1.5,0.1,3,0.4,4.5c0,0.1,0.1,0.4,0.2,0.8 C1,31,1.5,32.6,2.2,34.1c2.6,6.1,8.3,15.5,20.9,25.5c0.3,0.3,0.7,0.4,1.1,0.4c0.4,0,0.8-0.1,1.1-0.4c12.5-10,18.3-19.4,20.9-25.5 c0.7-1.5,1.3-3.1,1.6-4.7c0.1-0.5,0.2-0.7,0.2-0.8c0.3-1.5,0.4-3,0.4-4.5C48.3,10.8,37.5,0,24.2,0z M24.1,31.8 c-5.7,0-10.3-4.6-10.3-10.3s4.6-10.3,10.3-10.3c5.7,0,10.3,4.6,10.3,10.3S29.8,31.8,24.1,31.8z" />
+    </symbol>
+    <symbol viewBox="0 0 36 45" id="icon-marker-position">
+      <path d="M18,0c9.9,0,18,8.1,18,18S18,45,18,45S0,27.9,0,18S8.1,0,18,0z"/> 
+    </symbol>
+    <symbol viewBox="0 0 23 20" id="icon-menu">
+      <path class="st0" d="M1.6,3.4h19.7c0.9,0,1.6-0.8,1.6-1.7c0-1-0.7-1.7-1.6-1.7H1.6C0.7,0,0,0.8,0,1.7C0,2.7,0.7,3.4,1.6,3.4z M21.4,16.6H1.6c-0.9,0-1.6,0.8-1.6,1.7c0,1,0.7,1.7,1.6,1.7h19.7c0.9,0,1.6-0.8,1.6-1.7C23,17.3,22.3,16.6,21.4,16.6z M1.6,11.6 h15.3c0.9,0,1.6-0.8,1.6-1.7c0-1-0.7-1.7-1.6-1.7H1.6C0.7,8.2,0,8.9,0,9.9C0,10.8,0.7,11.6,1.6,11.6z"/>
+    </symbol>
+    <symbol viewBox="0 0 50 50" id="icon-checked">
+    <path d="M19.7,39c-0.8,0-1.5-0.3-2.1-0.9L6.9,27.5c-1.2-1.2-1.2-3.1,0-4.3c1.2-1.2,3.1-1.2,4.3,0l8.5,8.5l19.2-19.2
+    	c1.2-1.2,3.1-1.2,4.3,0c1.2,1.2,1.2,3.1,0,4.3L21.8,38.1C21.2,38.7,20.4,39,19.7,39z"/>
+    </symbol>
+    <symbol viewBox="0 0 40 40" id="icon-loader">
+      <path opacity="0.5" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946 s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634 c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"/>
+      <path class="loader loader__inner" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0 C22.32,8.481,24.301,9.057,26.013,10.047z">
+        <animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="0.5s" repeatCount="indefinite"/>
+      </path>
+    </symbol>
+    <symbol viewBox="0 0 491.858 491.858" id="icon-zoom-out">
+      <path d="M465.167,211.613H240.21H26.69c-8.424,0-26.69,11.439-26.69,34.316s18.267,34.316,26.69,34.316h213.52h224.959
+  			c8.421,0,26.689-11.439,26.689-34.316S473.59,211.613,465.167,211.613z"/>
+    </symbol>
+    <symbol viewBox="0 0 491.86 491.86" id="icon-zoom-in">
+      <path d="M465.167,211.614H280.245V26.691c0-8.424-11.439-26.69-34.316-26.69s-34.316,18.267-34.316,26.69v184.924H26.69
+  			C18.267,211.614,0,223.053,0,245.929s18.267,34.316,26.69,34.316h184.924v184.924c0,8.422,11.438,26.69,34.316,26.69
+  			s34.316-18.268,34.316-26.69V280.245H465.17c8.422,0,26.69-11.438,26.69-34.316S473.59,211.614,465.167,211.614z"/>
+    </symbol>
+  </svg>
+</body>
+
+</html>

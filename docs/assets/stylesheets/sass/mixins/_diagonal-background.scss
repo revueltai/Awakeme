@@ -1,0 +1,37 @@
+@mixin diagonal-background($width, $height, $color, $position: 'relative', $orientation: 'after', $alignment: 'left') {
+  $w: $width/1px;
+  $h: $height/1px;
+  $v_pad: (($height / $width) * 100 + 1) + '%';
+  $rgb_color: 'rgb(#{red($color)}, #{green($color)}, #{blue($color)})';
+  $points: '0,0  0,#{$h} #{$w},0';
+
+  @if ($alignment == 'right') {
+    $points: '#{$w},0  0,#{$h} #{$w},#{$h}';
+  }
+
+  @if ($position == 'absolute') {
+    position: relative;
+  }
+
+  &::#{$orientation} {
+    position: #{$position};
+    content: '';
+    width: 100%;
+    height: 0;
+    left: 0;
+    display: block;
+    padding-top: #{$v_pad};
+    padding-right: 0;
+    padding-bottom: 0;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="#{$w}" height="#{$h}"><polygon points="#{$points}" style="fill:#{$rgb_color};stroke:#{$rgb_color};stroke-width:0"></polygon></svg>');
+
+    @if ($orientation == 'after') {
+      bottom: -1px;
+    } @else if ($orientation == 'before') {
+      top: -1px;
+    }
+  }
+}
