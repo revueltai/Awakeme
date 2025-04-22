@@ -1,4 +1,4 @@
-# Awakeme
+# Awakeme (PoC)
 Awakeme - The app to tell you exactly where to get off your train or bus.
 Tired of falling asleep on the train or bus and missing your stop? Still checking your phone every two seconds to see if you’re still on track? Just sit back, relax and let Awakeme alert you when you are about to arrive at your destination!
 
